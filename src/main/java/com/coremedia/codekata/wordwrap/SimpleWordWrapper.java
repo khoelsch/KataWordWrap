@@ -4,18 +4,26 @@ package com.coremedia.codekata.wordwrap;
  * The first simple, straight-forward approach.
  */
 public class SimpleWordWrapper implements WordWrapper {
+  private int maxCharsPerLine;
+  private StringBuilder newLineBuilder;
+
 
   public String wrap(String lineToWrap, int maxCharsPerLine) {
+    this.maxCharsPerLine = maxCharsPerLine;
+
     return (lineToWrap.length() <= maxCharsPerLine)
       ? lineToWrap
-      : wrapLine(lineToWrap, maxCharsPerLine);
+      : wrapLine(lineToWrap);
   }
 
-  private String wrapLine(String lineToWrap, int maxCharsPerLine) {
-    StringBuilder newLineBuilder = new StringBuilder();
-
+  private String wrapLine(String lineToWrap) {
     String[] words = lineToWrap.split(" ");
+    String wrappedLine = fillLines(words);
+    return wrappedLine.trim();
+  }
 
+  private String fillLines(String[] words) {
+    newLineBuilder = new StringBuilder();
     int lineLength = 0;
     for (String word : words) {
       String wordWithTrainlingSpace = word + " ";
@@ -24,14 +32,17 @@ public class SimpleWordWrapper implements WordWrapper {
         newLineBuilder.append(wordWithTrainlingSpace);
         lineLength += wordWithTrainlingSpace.length();
       } else {
-        newLineBuilder.deleteCharAt(newLineBuilder.length()-1);
-        newLineBuilder.append("\n");
+        removeTralingSpaceAndAddLineBreak();
         newLineBuilder.append(wordWithTrainlingSpace);
         lineLength = wordWithTrainlingSpace.length();
       }
     }
 
-    String wrappedLine = newLineBuilder.toString();
-    return wrappedLine.trim();
+    return newLineBuilder.toString();
+  }
+
+  private void removeTralingSpaceAndAddLineBreak() {
+    newLineBuilder.deleteCharAt(newLineBuilder.length() - 1);
+    newLineBuilder.append("\n");
   }
 }
