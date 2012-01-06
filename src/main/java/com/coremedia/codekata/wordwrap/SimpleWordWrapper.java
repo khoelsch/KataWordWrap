@@ -24,17 +24,18 @@ public class SimpleWordWrapper implements WordWrapper {
 
   private String fillLines(String[] words) {
     newLineBuilder = new StringBuilder();
-    int lineLength = 0;
+    int currentLineLength = 0;
+
     for (String word : words) {
       String wordWithTrainlingSpace = word + " ";
-      boolean spaceLeftInLine = (lineLength + wordWithTrainlingSpace.length()) <= maxCharsPerLine;
+      boolean spaceLeftInLine = (currentLineLength + wordWithTrainlingSpace.length()) <= maxCharsPerLine;
       if (spaceLeftInLine) {
         newLineBuilder.append(wordWithTrainlingSpace);
-        lineLength += wordWithTrainlingSpace.length();
+        currentLineLength += wordWithTrainlingSpace.length();
       } else {
         removeTralingSpaceAndAddLineBreak();
         newLineBuilder.append(wordWithTrainlingSpace);
-        lineLength = wordWithTrainlingSpace.length();
+        currentLineLength = wordWithTrainlingSpace.length();
       }
     }
 
