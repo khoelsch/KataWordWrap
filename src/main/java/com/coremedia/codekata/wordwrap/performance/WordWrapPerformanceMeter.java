@@ -3,25 +3,28 @@ package com.coremedia.codekata.wordwrap.performance;
 import com.coremedia.codekata.wordwrap.SimpleWordWrapper;
 
 public class WordWrapPerformanceMeter {
+  private static SimpleWordWrapper wrapper;
+  private static final int RUNS = 100;
   final static int MAX_CHARS_PER_LINE = 10;
   final static String LINE = "I am such a big line you can't even imaging how damn big I am. " +
           "You should really consider telling your local newspaper!";
-  private static SimpleWordWrapper wrapper;
 
   public static void main(String[] args) {
-    int runs = 100;
-    long startTime = System.currentTimeMillis();
+    long startTime = System.nanoTime();
 
-    for (int i=0; i<runs; ++i) {
+    for (int i=0; i< RUNS; ++i) {
       wrapper = new SimpleWordWrapper();
       wrapper.wrap(LINE, MAX_CHARS_PER_LINE);
     }
 
-    long endTime = System.currentTimeMillis();
+    long endTime = System.nanoTime();
     long totalTime = endTime - startTime;
 
-    double totalSeconds = (double) totalTime / 1000;
-    double average = (double) totalTime / runs;
-    System.out.println(String.format("Average duration: %.3g Milliseconds (with %d runs and a total of %.3g seconds)", average, runs, totalSeconds));
+    double totalMillis = (double) totalTime / (1000*1000);
+    double averageMillis = totalMillis / RUNS;
+    System.out.println(String.format("Average duration: %.3g Milliseconds (with %d runs and a total of %.3g Milliseconds)",
+            averageMillis,
+            RUNS,
+            totalMillis));
   }
 }

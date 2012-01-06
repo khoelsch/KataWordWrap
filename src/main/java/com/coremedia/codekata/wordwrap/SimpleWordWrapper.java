@@ -7,7 +7,6 @@ public class SimpleWordWrapper implements WordWrapper {
   private int maxCharsPerLine;
   private StringBuilder newLineBuilder;
 
-
   public String wrap(String lineToWrap, int maxCharsPerLine) {
     this.maxCharsPerLine = maxCharsPerLine;
 
