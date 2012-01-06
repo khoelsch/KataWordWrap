@@ -6,6 +6,6 @@ package com.coremedia.codekata.wordwrap;
 public class SimpleWordWrapper implements WordWrapper {
 
   public String wrap(String lineToWrap, int maxCharsPerLine) {
-    return null;
+    return lineToWrap;
   }
 }
