@@ -4,12 +4,12 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class SimpleWordWrapperTest {
-  private SimpleWordWrapper wrapper;
+public class SplitLineWrapperTest {
+  private SplitLineWrapper wrapper;
 
   @Before
   public void setUp() throws Exception {
-    wrapper = new SimpleWordWrapper();
+    wrapper = new SplitLineWrapper();
   }
 
   @Test

@@ -1,9 +1,9 @@
 package com.coremedia.codekata.wordwrap.performance;
 
-import com.coremedia.codekata.wordwrap.SimpleWordWrapper;
+import com.coremedia.codekata.wordwrap.SplitLineWrapper;
 
 public class WordWrapPerformanceMeter {
-  private static SimpleWordWrapper wrapper;
+  private static SplitLineWrapper wrapper;
   private static final int RUNS = 100;
   final static int MAX_CHARS_PER_LINE = 10;
   final static String LINE = "I am such a big line you can't even imaging how damn big I am. " +
@@ -13,7 +13,7 @@ public class WordWrapPerformanceMeter {
     long startTime = System.nanoTime();
 
     for (int i=0; i< RUNS; ++i) {
-      wrapper = new SimpleWordWrapper();
+      wrapper = new SplitLineWrapper();
       wrapper.wrap(LINE, MAX_CHARS_PER_LINE);
     }
 

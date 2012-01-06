@@ -2,8 +2,10 @@ package com.coremedia.codekata.wordwrap;
 
 /**
  * The first simple, straight-forward approach.
+ *
+ * Uses String.split() to extract words from line.
  */
-public class SimpleWordWrapper implements WordWrapper {
+public class SplitLineWrapper implements LineWrapper {
   private int maxCharsPerLine;
   private StringBuilder newLineBuilder;
 
