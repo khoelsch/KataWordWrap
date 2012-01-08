@@ -11,10 +11,10 @@ import java.util.Collection;
  * just add a constructor call to your new implementation into the {@link #data()} method.
  */
 @RunWith(Parameterized.class)
-public abstract class DataDrivenLineWrapperTest {
+public abstract class AbstractDataDrivenLineWrapperTest {
   protected LineWrapper wrapper;
 
-  public DataDrivenLineWrapperTest(final LineWrapper wrapper) {
+  public AbstractDataDrivenLineWrapperTest(final LineWrapper wrapper) {
     this.wrapper = wrapper;
   }
 

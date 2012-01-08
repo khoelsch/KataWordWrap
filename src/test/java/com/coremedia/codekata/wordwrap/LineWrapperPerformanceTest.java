@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * A different approach: Performance test as data-driven UnitTest
  */
-public final class LineWrapperPerformanceTest extends DataDrivenLineWrapperTest {
+public final class LineWrapperPerformanceTest extends AbstractDataDrivenLineWrapperTest {
 
   public static final int MAX_CHARS_PER_LINE = 20;
   private static final List<String> testText = new ArrayList<String>();

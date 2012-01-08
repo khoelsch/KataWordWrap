@@ -4,9 +4,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Tests the implementations of LineWrapper, that are registered in {@link com.coremedia.codekata.wordwrap.DataDrivenLineWrapperTest#data()}.
+ * Tests the implementations of LineWrapper, that are registered in {@link AbstractDataDrivenLineWrapperTest#data()}.
  */
-public final class LineWrapperTest extends DataDrivenLineWrapperTest {
+public final class LineWrapperTest extends AbstractDataDrivenLineWrapperTest {
 
   public LineWrapperTest(final LineWrapper wrapper) {
     super(wrapper);
