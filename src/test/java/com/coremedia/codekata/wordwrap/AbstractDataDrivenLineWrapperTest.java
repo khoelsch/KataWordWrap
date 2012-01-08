@@ -12,7 +12,7 @@ import java.util.Collection;
  */
 @RunWith(Parameterized.class)
 public abstract class AbstractDataDrivenLineWrapperTest {
-  protected LineWrapper wrapper;
+  protected final LineWrapper wrapper;
 
   public AbstractDataDrivenLineWrapperTest(final LineWrapper wrapper) {
     this.wrapper = wrapper;
