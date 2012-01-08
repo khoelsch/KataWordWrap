@@ -1,21 +1,20 @@
 package com.coremedia.codekata.wordwrap;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
-public class SplitLineWrapperTest {
-  private SplitLineWrapper wrapper;
+@RunWith(Parameterized.class)
+public final class LineWrapperTest extends DataDrivenLineWrapperTest {
 
-  @Before
-  public void setUp() throws Exception {
-    wrapper = new SplitLineWrapper();
+  public LineWrapperTest(final LineWrapper wrapper) {
+    super(wrapper);
   }
 
   @Test
   public void dontBreakShortLine() {
     String line = "Please don't wrap me!";
-
     Assert.assertEquals(line, wrapper.wrap(line, 100));
   }
 
@@ -28,4 +27,5 @@ public class SplitLineWrapperTest {
 
     Assert.assertEquals(expected, actual);
   }
+
 }
