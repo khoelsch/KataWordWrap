@@ -9,15 +9,34 @@
     <version>1.0</version>
 
     <description>
-      CodeKata in which you simply wrap a string by inserting line breaks after a certain number of characters (columns).
+        CodeKata in which you simply wrap a string by inserting line breaks after a certain number of characters
+        (columns).
     </description>
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.9</version>
-    </dependency>
-  </dependencies>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.9</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <redirectTestOutputToFile>true</redirectTestOutputToFile>
+                </configuration>
+                <version>2.7.2</version>
+            </plugin>
+        </plugins>
+    </build>
 
 
 </project>
