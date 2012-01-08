@@ -7,8 +7,8 @@ public final class RreLineWrapper implements LineWrapper {
 
   @Override
   public String wrap(final String lineToWrap, final int maxCharsPerLine) {
-    StringBuilder result = new StringBuilder();
-    StringBuilder rest = new StringBuilder(lineToWrap);
+    final StringBuilder result = new StringBuilder();
+    final StringBuilder rest = new StringBuilder(lineToWrap);
 
     while (rest.length() > maxCharsPerLine) {
       final int maxIndex = Math.min(rest.length(), maxCharsPerLine + 1);
