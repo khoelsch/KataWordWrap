@@ -2,10 +2,10 @@ package com.coremedia.codekata.wordwrap;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
-@RunWith(Parameterized.class)
+/**
+ * Tests the implementations of LineWrapper, that are registered in {@link com.coremedia.codekata.wordwrap.DataDrivenLineWrapperTest#data()}.
+ */
 public final class LineWrapperTest extends DataDrivenLineWrapperTest {
 
   public LineWrapperTest(final LineWrapper wrapper) {

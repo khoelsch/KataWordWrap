@@ -1,5 +1,6 @@
 package com.coremedia.codekata.wordwrap;
 
+import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import java.util.Arrays;
@@ -9,7 +10,8 @@ import java.util.Collection;
  * This class provides data-driven testing of LineWrappers. To add a new LineWrapper implementation to all tests
  * just add a constructor call to your new implementation into the {@link #data()} method.
  */
-public class DataDrivenLineWrapperTest {
+@RunWith(Parameterized.class)
+public abstract class DataDrivenLineWrapperTest {
   protected LineWrapper wrapper;
 
   public DataDrivenLineWrapperTest(final LineWrapper wrapper) {
