@@ -22,6 +22,8 @@ public abstract class AbstractDataDrivenLineWrapperTest {
   public static Collection<Object[]> data() {
     return Arrays.asList(
             new Object[]{new SplitLineWrapper()},
-            new Object[]{new RreLineWrapper()});
+            new Object[]{new RreLineWrapper()},
+            new Object[]{new RreLineWrapper2()}
+    );
   }
 }
