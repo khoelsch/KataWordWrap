@@ -45,11 +45,8 @@ public abstract class AbstractLineWrapperTest {
     String line = "abcd efghijk lmno pqrstuv wxy z";
     Assert.assertEquals(line, wrapper.wrap(line, -1));
     Assert.assertEquals(line, wrapper.wrap(line, 0));
-  }
 
-  @Test
-  public void testBoundaries2() throws Exception {
-    String line = "a b cde f g";
+    line = "a b cde f g";
     String expected = "a\nb\ncde\nf\ng";
     Assert.assertEquals(expected, wrapper.wrap(line, 1));
 

@@ -3,6 +3,8 @@ package com.coremedia.codekata.wordwrap.performance;
 import com.coremedia.codekata.wordwrap.CharArrayLineWrapper;
 import com.coremedia.codekata.wordwrap.CharAtLineWrapper;
 import com.coremedia.codekata.wordwrap.LineWrapper;
+import com.coremedia.codekata.wordwrap.RreLineWrapper;
+import com.coremedia.codekata.wordwrap.RreLineWrapper2;
 import com.coremedia.codekata.wordwrap.SplitLineWrapper;
 
 import java.util.ArrayList;
@@ -15,10 +17,13 @@ public class LineWrapperPerformanceMeter {
   private static int MAX_CHARS_PER_LINE = 10;
 
   private static List<LineWrapper> testedWrappers = new ArrayList<LineWrapper>();
+
   static {
     testedWrappers.add(new SplitLineWrapper());
     testedWrappers.add(new CharAtLineWrapper());
     testedWrappers.add(new CharArrayLineWrapper());
+    testedWrappers.add(new RreLineWrapper());
+    testedWrappers.add(new RreLineWrapper2());
   }
 
   public static void main(String[] args) {
@@ -30,14 +35,14 @@ public class LineWrapperPerformanceMeter {
   private static void printAverageExecutionTime(LineWrapper wrapper) {
     long startTime = System.nanoTime();
 
-    for (int i=0; i< RUNS; ++i) {
+    for (int i = 0; i < RUNS; ++i) {
       wrapper.wrap(LINE, MAX_CHARS_PER_LINE);
     }
 
     long endTime = System.nanoTime();
     long totalTime = endTime - startTime;
 
-    double totalMillis = (double) totalTime / (1000*1000);
+    double totalMillis = (double) totalTime / (1000 * 1000);
     double averageMillis = totalMillis / RUNS;
     System.out.println(String.format("Average duration for class '%s': %.3g Milliseconds (with %d runs and a total of %.3g Milliseconds)",
             wrapper.getClass().getName(),
