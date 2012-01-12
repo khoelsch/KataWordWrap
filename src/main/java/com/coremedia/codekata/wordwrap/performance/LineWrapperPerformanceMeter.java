@@ -1,5 +1,6 @@
 package com.coremedia.codekata.wordwrap.performance;
 
+import com.coremedia.codekata.wordwrap.CharAtLineWrapper;
 import com.coremedia.codekata.wordwrap.LineWrapper;
 import com.coremedia.codekata.wordwrap.SplitLineWrapper;
 
@@ -15,6 +16,7 @@ public class LineWrapperPerformanceMeter {
   private static List<LineWrapper> testedWrappers = new ArrayList<LineWrapper>();
   static {
     testedWrappers.add(new SplitLineWrapper());
+    testedWrappers.add(new CharAtLineWrapper());
   }
 
   public static void main(String[] args) {
@@ -27,7 +29,6 @@ public class LineWrapperPerformanceMeter {
     long startTime = System.nanoTime();
 
     for (int i=0; i< RUNS; ++i) {
-      wrapper = new SplitLineWrapper();
       wrapper.wrap(LINE, MAX_CHARS_PER_LINE);
     }
 

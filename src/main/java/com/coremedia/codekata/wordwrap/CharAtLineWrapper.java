@@ -22,22 +22,27 @@ public class CharAtLineWrapper implements LineWrapper {
          ++i) {
       boolean noSpaceLeftInLine = (currentLineLength+1) > maxCharsPerLine;
       if (noSpaceLeftInLine) {
-        String wordPart = removeLastWordPartAndTrainlingSpace();
+        String wordPart = removeLastWordPartAndTrailingSpace();
         newLineBuilder.append("\n");
+        currentLineLength = 0;
         newLineBuilder.append(wordPart);
       }
       newLineBuilder.append(lineToWrap.charAt(i));
+      ++currentLineLength;
     }
 
-    return null;
+    return newLineBuilder.toString();
   }
 
-  private String removeLastWordPartAndTrainlingSpace() {
-    int lastCharacterIndex = newLineBuilder.length() - 1;
-    int lastSpaceIndex = newLineBuilder.indexOf(" ", lastCharacterIndex);
-    int lastWordFirstCharIndex = lastSpaceIndex + 1;
-    String wordPart = newLineBuilder.substring(lastWordFirstCharIndex, lastCharacterIndex);
-    newLineBuilder.delete(lastSpaceIndex, lastCharacterIndex);
+  /**
+   * @return the last word without(!) leading space
+   */
+  private String removeLastWordPartAndTrailingSpace() {
+    int lastCharIndex = newLineBuilder.length() - 1;
+    int lastSpaceIndex = newLineBuilder.lastIndexOf(" ");
+    int firstCharOfLastWordIndex = lastSpaceIndex + 1;
+    String wordPart = newLineBuilder.substring(firstCharOfLastWordIndex, lastCharIndex + 1);
+    newLineBuilder.delete(lastSpaceIndex, lastCharIndex + 1);
     return wordPart;
   }
 }
