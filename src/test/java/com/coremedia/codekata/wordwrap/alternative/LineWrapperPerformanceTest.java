@@ -1,5 +1,7 @@
 package com.coremedia.codekata.wordwrap.alternative;
 
+import com.coremedia.codekata.wordwrap.CharArrayLineWrapper;
+import com.coremedia.codekata.wordwrap.CharAtLineWrapper;
 import com.coremedia.codekata.wordwrap.LineWrapper;
 import com.coremedia.codekata.wordwrap.RreLineWrapper;
 import com.coremedia.codekata.wordwrap.RreLineWrapper2;
@@ -40,6 +42,8 @@ public final class LineWrapperPerformanceTest {
     wrappers.add(new LineWrapper[]{new SplitLineWrapper()});
     wrappers.add(new LineWrapper[]{new RreLineWrapper()});
     wrappers.add(new LineWrapper[]{new RreLineWrapper2()});
+    wrappers.add(new LineWrapper[]{new CharAtLineWrapper()});
+    wrappers.add(new LineWrapper[]{new CharArrayLineWrapper()});
 
     return wrappers;
   }
