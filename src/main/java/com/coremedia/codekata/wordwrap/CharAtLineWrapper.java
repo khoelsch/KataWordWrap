@@ -5,7 +5,8 @@ package com.coremedia.codekata.wordwrap;
  */
 public class CharAtLineWrapper implements LineWrapper {
   private int maxCharsPerLine;
-  private StringBuilder newLineBuilder = new StringBuilder();
+  private int currentLineLength;
+  private StringBuilder newLineBuilder;
 
   public String wrap(String lineToWrap, int maxCharsPerLine) {
     this.maxCharsPerLine = maxCharsPerLine;
@@ -16,22 +17,25 @@ public class CharAtLineWrapper implements LineWrapper {
   }
 
   private String wrapLine(String lineToWrap) {
-    int currentLineLength = 0;
+    currentLineLength = 0;
+    newLineBuilder = new StringBuilder();
+
     for (int i=0;
          i < lineToWrap.length();
          ++i) {
-      boolean noSpaceLeftInLine = (currentLineLength+1) > maxCharsPerLine;
-      if (noSpaceLeftInLine) {
+      if (noSpaceLeftInLine()) {
         String wordPart = removeLastWordPartAndTrailingSpace();
-        newLineBuilder.append("\n");
-        currentLineLength = 0;
+        breakLine();
         newLineBuilder.append(wordPart);
       }
-      newLineBuilder.append(lineToWrap.charAt(i));
-      ++currentLineLength;
+      appendChar(lineToWrap.charAt(i));
     }
 
     return newLineBuilder.toString();
+  }
+
+  private boolean noSpaceLeftInLine() {
+    return (currentLineLength+1) > maxCharsPerLine;
   }
 
   /**
@@ -44,5 +48,15 @@ public class CharAtLineWrapper implements LineWrapper {
     String wordPart = newLineBuilder.substring(firstCharOfLastWordIndex, lastCharIndex + 1);
     newLineBuilder.delete(lastSpaceIndex, lastCharIndex + 1);
     return wordPart;
+  }
+
+  private void appendChar(char foo) {
+    newLineBuilder.append(foo);
+    ++currentLineLength;
+  }
+
+  private void breakLine() {
+    newLineBuilder.append("\n");
+    currentLineLength = 0;
   }
 }
