@@ -7,18 +7,33 @@ public final class RreLineWrapper2 implements LineWrapper {
 
   @Override
   public String wrap(final String lineToWrap, final int maxCharsPerLine) {
+    if (maxCharsPerLine <= 0) {
+      return lineToWrap;
+    }
+
     StringBuilder sb = new StringBuilder(lineToWrap);
 
     int index = maxCharsPerLine;
-    int minIndex = -1;
+    int minIndex = 1;
+    boolean overflow = false;
 
-    while (index > minIndex && index < sb.length()) {
+    while (index < sb.length()) {
       if (sb.charAt(index) == ' ') {
         sb.setCharAt(index, '\n');
-        minIndex = index;
-        index += maxCharsPerLine;
+        minIndex = index + 2;
+        index += maxCharsPerLine + 1;
+        overflow = false;
       } else {
-        index--;
+        if (index > minIndex) {
+          if (overflow) {
+            index++;
+          } else {
+            index--;
+          }
+        } else {
+          index += maxCharsPerLine;
+          overflow = true;
+        }
       }
     }
 
