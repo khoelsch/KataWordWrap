@@ -1,5 +1,6 @@
 package com.coremedia.codekata.wordwrap.performance;
 
+import com.coremedia.codekata.wordwrap.CharArrayLineWrapper;
 import com.coremedia.codekata.wordwrap.CharAtLineWrapper;
 import com.coremedia.codekata.wordwrap.LineWrapper;
 import com.coremedia.codekata.wordwrap.SplitLineWrapper;
@@ -17,6 +18,7 @@ public class LineWrapperPerformanceMeter {
   static {
     testedWrappers.add(new SplitLineWrapper());
     testedWrappers.add(new CharAtLineWrapper());
+    testedWrappers.add(new CharArrayLineWrapper());
   }
 
   public static void main(String[] args) {
