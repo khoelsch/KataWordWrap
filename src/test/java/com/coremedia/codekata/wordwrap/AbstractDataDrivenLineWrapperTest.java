@@ -9,6 +9,8 @@ import java.util.Collection;
 /**
  * This class provides data-driven testing of LineWrappers. To add a new LineWrapper implementation to all tests
  * just add a constructor call to your new implementation into the {@link #data()} method.
+ *
+ * @deprecated
  */
 @RunWith(Parameterized.class)
 public abstract class AbstractDataDrivenLineWrapperTest {
