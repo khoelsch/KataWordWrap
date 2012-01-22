@@ -3,27 +3,48 @@ package com.coremedia.codekata.wordwrap;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
  * A different approach: Performance test as data-driven UnitTest
+ * Replaced by {@link com.coremedia.codekata.wordwrap.benchmark.LineWrapperBenchmarkTest}
+ *
  * @deprecated
  */
-@Ignore
-public final class LineWrapperPerformanceTest extends AbstractDataDrivenLineWrapperTest {
+@RunWith(Parameterized.class)
+@Ignore("deprecated")
+public final class LineWrapperPerformanceTest {
+
+  protected final LineWrapper wrapper;
 
   public static final String TEST_TXT = "ipsum.txt";
   public static final int MAX_CHARS_PER_LINE = 20;
   private static final List<String> listOfLines = new ArrayList<String>();
 
   public LineWrapperPerformanceTest(final LineWrapper wrapper) {
-    super(wrapper);
+    this.wrapper = wrapper;
+  }
+
+  @Parameterized.Parameters
+  public static Collection<Object[]> data() {
+    Collection<Object[]> wrappers = new ArrayList<Object[]>();
+
+    wrappers.add(new LineWrapper[]{new SplitLineWrapper()});
+    wrappers.add(new LineWrapper[]{new RreLineWrapper()});
+    wrappers.add(new LineWrapper[]{new RreLineWrapper2()});
+    wrappers.add(new LineWrapper[]{new CharAtLineWrapper()});
+    wrappers.add(new LineWrapper[]{new CharArrayLineWrapper()});
+
+    return wrappers;
   }
 
   @BeforeClass

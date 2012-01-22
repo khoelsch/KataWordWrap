@@ -1,7 +1,7 @@
 package com.coremedia.codekata.wordwrap;
 
 /**
- * LineWrapper implementation by rre
+ * A faster LineWrapper implementation by rre
  */
 public final class RreLineWrapper2 implements LineWrapper {
 

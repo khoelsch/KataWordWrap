@@ -1,19 +1,17 @@
 package com.coremedia.codekata.wordwrap;
 
+import com.coremedia.codekata.wordwrap.LineWrapper;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * Tests the implementations of LineWrapper, that are registered in {@link AbstractDataDrivenLineWrapperTest#data()}.
- * @deprecated
+ * Tests the {@link LineWrapper} interface.
+ * To test your implementation of LineWrapper initialize 'wrapper' with an instance of your implementation.
  */
-@Ignore
-public final class LineWrapperTest extends AbstractDataDrivenLineWrapperTest {
+public abstract class AbstractLineWrapperTest {
 
-  public LineWrapperTest(final LineWrapper wrapper) {
-    super(wrapper);
-  }
+  // initialize 'wrapper' with an instance of your LineWrapper implementation
+  protected LineWrapper wrapper = null;
 
   @Test
   public void dontBreakShortLine() {
@@ -43,15 +41,24 @@ public final class LineWrapperTest extends AbstractDataDrivenLineWrapperTest {
   }
 
   @Test
-  public void testBoundaries() throws Exception {
+  public void testBoundaries1() throws Exception {
     String line = "abcd efghijk lmno pqrstuv wxy z";
-    String expected = line;
-    Assert.assertEquals(expected, wrapper.wrap(line, 0));
+    Assert.assertEquals(line, wrapper.wrap(line, -1));
+    Assert.assertEquals(line, wrapper.wrap(line, 0));
 
-    line = "a b c d e";
-    expected = "a\nb\nc\nd\ne";
+    line = "a b cde f g";
+    String expected = "a\nb\ncde\nf\ng";
     Assert.assertEquals(expected, wrapper.wrap(line, 1));
 
+    line = "ab cdefg";
+    expected = "ab\ncdefg";
+    Assert.assertEquals(expected, wrapper.wrap(line, 7));
+
+    expected = "ab cdefg";
+    Assert.assertEquals(expected, wrapper.wrap(line, 8));
+
+    expected = "ab cdefg";
+    Assert.assertEquals(expected, wrapper.wrap(line, 9));
 
   }
 }

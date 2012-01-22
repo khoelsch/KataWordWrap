@@ -1,6 +1,5 @@
-package com.coremedia.codekata.wordwrap.alternative;
+package com.coremedia.codekata.wordwrap;
 
-import com.coremedia.codekata.wordwrap.CharAtLineWrapper;
 import org.junit.Before;
 
 /**
