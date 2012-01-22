@@ -23,6 +23,20 @@
             <artifactId>junit</artifactId>
             <version>4.9</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.carrotsearch</groupId>
+            <artifactId>junit-benchmarks</artifactId>
+            <version>0.3.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.3.163</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -30,10 +44,15 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <redirectTestOutputToFile>true</redirectTestOutputToFile>
-                </configuration>
                 <version>2.7.2</version>
+                <configuration>
+                    <!--<redirectTestOutputToFile>true</redirectTestOutputToFile>-->
+                    <systemPropertyVariables>
+                        <jub.consumers>CONSOLE</jub.consumers>
+                        <jub.consumers>H2</jub.consumers>
+                        <jub.db.file>.benchmarks</jub.db.file>
+                    </systemPropertyVariables>
+                </configuration>
             </plugin>
         </plugins>
     </build>
