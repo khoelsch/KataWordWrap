@@ -12,6 +12,7 @@ import com.coremedia.codekata.wordwrap.IndexAccessLineWrapper;
 import com.coremedia.codekata.wordwrap.LineWrapper;
 import com.coremedia.codekata.wordwrap.RreLineWrapper;
 import com.coremedia.codekata.wordwrap.RreLineWrapper2;
+import com.coremedia.codekata.wordwrap.RreLineWrapper3;
 import com.coremedia.codekata.wordwrap.SplitLineWrapper;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -44,6 +45,7 @@ public class LineWrapperBenchmarkTest extends AbstractBenchmark {
     wrappers.put("SplitLineWrapper", new SplitLineWrapper());
     wrappers.put("RreLineWrapper", new RreLineWrapper());
     wrappers.put("RreLineWrapper2", new RreLineWrapper2());
+    wrappers.put("RreLineWrapper3", new RreLineWrapper3());
     wrappers.put("IndexAccessLineWrapper", new IndexAccessLineWrapper());
     wrappers.put("CharAtLineWrapper", new CharAtLineWrapper());
     wrappers.put("CharArrayLineWrapper", new CharArrayLineWrapper());
@@ -68,6 +70,12 @@ public class LineWrapperBenchmarkTest extends AbstractBenchmark {
     testPerformance(wrappers.get("RreLineWrapper2"));
   }
 
+ @Test
+  @BenchmarkOptions(benchmarkRounds = 10, warmupRounds = 10, callgc = true)
+  public void testRreLineWrapper3() throws Exception {
+    testPerformance(wrappers.get("RreLineWrapper3"));
+  }
+
   @Test
   @BenchmarkOptions(benchmarkRounds = 10, warmupRounds = 10, callgc = true)
   public void testCharArrayLineWrapper() throws Exception {
@@ -87,7 +95,7 @@ public class LineWrapperBenchmarkTest extends AbstractBenchmark {
   }
 
   private void testPerformance(final LineWrapper wrapper) {
-    for (int i=0; i<100; i++) {
+    for (int i = 0; i < 100; i++) {
       for (final String line : listOfLines) {
         wrapper.wrap(line, MAX_CHARS_PER_LINE);
       }
