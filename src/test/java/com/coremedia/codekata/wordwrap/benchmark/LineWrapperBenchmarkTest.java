@@ -10,6 +10,7 @@ import com.coremedia.codekata.wordwrap.CharArrayLineWrapper;
 import com.coremedia.codekata.wordwrap.CharAtLineWrapper;
 import com.coremedia.codekata.wordwrap.IndexAccessLineWrapper;
 import com.coremedia.codekata.wordwrap.LineWrapper;
+import com.coremedia.codekata.wordwrap.McoRreLineWrapper;
 import com.coremedia.codekata.wordwrap.RreLineWrapper;
 import com.coremedia.codekata.wordwrap.RreLineWrapper2;
 import com.coremedia.codekata.wordwrap.RreLineWrapper3;
@@ -49,6 +50,7 @@ public class LineWrapperBenchmarkTest extends AbstractBenchmark {
     wrappers.put("IndexAccessLineWrapper", new IndexAccessLineWrapper());
     wrappers.put("CharAtLineWrapper", new CharAtLineWrapper());
     wrappers.put("CharArrayLineWrapper", new CharArrayLineWrapper());
+    wrappers.put("McoRreLineWrapper", new McoRreLineWrapper());
   }
 
   @Test
@@ -92,6 +94,12 @@ public class LineWrapperBenchmarkTest extends AbstractBenchmark {
   @BenchmarkOptions(benchmarkRounds = 10, warmupRounds = 10, callgc = true)
   public void testIndexAccessLineWrapper() throws Exception {
     testPerformance(wrappers.get("IndexAccessLineWrapper"));
+  }
+
+  @Test
+  @BenchmarkOptions(benchmarkRounds = 10, warmupRounds = 10, callgc = true)
+  public void testMcoRreLineWrapper() throws Exception {
+    testPerformance(wrappers.get("McoRreLineWrapper"));
   }
 
   private void testPerformance(final LineWrapper wrapper) {
