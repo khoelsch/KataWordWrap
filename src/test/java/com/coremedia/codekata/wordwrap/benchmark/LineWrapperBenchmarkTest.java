@@ -6,14 +6,7 @@ import com.carrotsearch.junitbenchmarks.annotation.AxisRange;
 import com.carrotsearch.junitbenchmarks.annotation.BenchmarkHistoryChart;
 import com.carrotsearch.junitbenchmarks.annotation.BenchmarkMethodChart;
 import com.carrotsearch.junitbenchmarks.annotation.LabelType;
-import com.coremedia.codekata.wordwrap.CharArrayLineWrapper;
-import com.coremedia.codekata.wordwrap.CharAtLineWrapper;
-import com.coremedia.codekata.wordwrap.IndexAccessLineWrapper;
-import com.coremedia.codekata.wordwrap.LineWrapper;
-import com.coremedia.codekata.wordwrap.RreLineWrapper;
-import com.coremedia.codekata.wordwrap.RreLineWrapper2;
-import com.coremedia.codekata.wordwrap.RreLineWrapper3;
-import com.coremedia.codekata.wordwrap.SplitLineWrapper;
+import com.coremedia.codekata.wordwrap.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -40,22 +33,22 @@ public class LineWrapperBenchmarkTest extends AbstractBenchmark {
 
   @BeforeClass
   public static void setUpClass() throws Exception {
-    readTestText();
-
-    wrappers.put("SplitLineWrapper", new SplitLineWrapper());
-    wrappers.put("RreLineWrapper", new RreLineWrapper());
-    wrappers.put("RreLineWrapper2", new RreLineWrapper2());
-    wrappers.put("RreLineWrapper3", new RreLineWrapper3());
-    wrappers.put("IndexAccessLineWrapper", new IndexAccessLineWrapper());
-    wrappers.put("CharAtLineWrapper", new CharAtLineWrapper());
-    wrappers.put("CharArrayLineWrapper", new CharArrayLineWrapper());
+      readTestText();
+      wrappers.put("SplitLineWrapper", new SplitLineWrapper());
+      wrappers.put("RreLineWrapper", new RreLineWrapper());
+      wrappers.put("RreLineWrapper2", new RreLineWrapper2());
+      wrappers.put("RreLineWrapper3", new RreLineWrapper3());
+      wrappers.put("IndexAccessLineWrapper", new IndexAccessLineWrapper());
+      wrappers.put("CharAtLineWrapper", new CharAtLineWrapper());
+      wrappers.put("AveMmiLineWrapper", new AveMmiLineWrapper());
+      wrappers.put("CharArrayLineWrapper", new CharArrayLineWrapper());
   }
 
-  @Test
-  @BenchmarkOptions(benchmarkRounds = 10, warmupRounds = 10, callgc = true)
-  public void testSplitLineWrapper() throws Exception {
-    testPerformance(wrappers.get("SplitLineWrapper"));
-  }
+    @Test
+    @BenchmarkOptions(benchmarkRounds = 10, warmupRounds = 10, callgc = true)
+    public void testSplitLineWrapper() throws Exception {
+        testPerformance(wrappers.get("SplitLineWrapper"));
+    }
 
   @Test
   @BenchmarkOptions(benchmarkRounds = 10, warmupRounds = 10, callgc = true)
@@ -94,7 +87,13 @@ public class LineWrapperBenchmarkTest extends AbstractBenchmark {
     testPerformance(wrappers.get("IndexAccessLineWrapper"));
   }
 
-  private void testPerformance(final LineWrapper wrapper) {
+    @Test
+    @BenchmarkOptions(benchmarkRounds = 10, warmupRounds = 10, callgc = true)
+    public void testAveMmiLineWrapper() throws Exception {
+        testPerformance(wrappers.get("AveMmiLineWrapper"));
+    }
+
+    private void testPerformance(final LineWrapper wrapper) {
     for (int i = 0; i < 100; i++) {
       for (final String line : listOfLines) {
         wrapper.wrap(line, MAX_CHARS_PER_LINE);

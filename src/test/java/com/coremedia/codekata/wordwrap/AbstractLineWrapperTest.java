@@ -31,12 +31,12 @@ public abstract class AbstractLineWrapperTest {
 
   @Test
   public void testUnwrappable() throws Exception {
-    String line = "abcdefghijklmnopqrstuvwxy z";
-    String expected = "abcdefghijklmnopqrstuvwxy\nz";
+    String line = "abcdefghijklmnopqrstuvwx yz";
+    String expected = "abcde\nfghij\nklmno\npqrst\nuvwx\nyz";
     Assert.assertEquals(expected, wrapper.wrap(line, 5));
 
     line = "abc defghijklmnopqrstuvwxyz";
-    expected = "abc\ndefghijklmnopqrstuvwxyz";
+    expected = "abc\ndefgh\nijklm\nnopqr\nstuvw\nxyz";
     Assert.assertEquals(expected, wrapper.wrap(line, 5));
   }
 
@@ -47,17 +47,16 @@ public abstract class AbstractLineWrapperTest {
     Assert.assertEquals(line, wrapper.wrap(line, 0));
 
     line = "a b cde f g";
-    String expected = "a\nb\ncde\nf\ng";
+    String expected = "a\nb\nc\nd\ne\nf\ng\n";
     Assert.assertEquals(expected, wrapper.wrap(line, 1));
 
     line = "ab cdefg";
     expected = "ab\ncdefg";
     Assert.assertEquals(expected, wrapper.wrap(line, 7));
 
-    expected = "ab cdefg";
+    expected = line;
     Assert.assertEquals(expected, wrapper.wrap(line, 8));
 
-    expected = "ab cdefg";
     Assert.assertEquals(expected, wrapper.wrap(line, 9));
 
   }
