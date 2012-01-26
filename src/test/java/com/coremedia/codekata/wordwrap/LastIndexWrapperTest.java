@@ -46,4 +46,12 @@ public class LastIndexWrapperTest {
     String actual = wrapper.wrap(line, 3);
     Assert.assertEquals(expected, actual);
   }
+
+  @Test
+  public void simpleForceWrap() {
+    String line = "abcdef";
+    String expected = "abc\ndef";
+    String actual = wrapper.wrap(line, 3);
+    Assert.assertEquals(expected, actual);
+  }
 }

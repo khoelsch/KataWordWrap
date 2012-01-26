@@ -44,6 +44,10 @@ public class LastIndexWrapper implements LineWrapper {
     return destBuilder.toString();
   }
 
+  private boolean charsLeftToConsume() {
+    return nextLineStartPos < lineToWrap.length();
+  }
+
   private void writeCharsToBuffer() {
     if (nextBreakpointInLine()) {
       writeNextLine();
@@ -52,35 +56,43 @@ public class LastIndexWrapper implements LineWrapper {
     }
   }
 
+  private boolean nextBreakpointInLine() {
+    return (nextLineStartPos + maxCharsPerLine) < lineToWrap.length();
+  }
+
   private void writeNextLine() {
     int breakPos = nextLineStartPos + maxCharsPerLine;
     if (lineToWrap.charAt(breakPos) == ' ') {
-      writeNextLineUpTo(breakPos);
+      writeLineExcluding(breakPos);
     } else {
-      // TODO berueksichtigen, wenn der String keine Leerzeichen enthaelt!
       int rightmostSpacePos = lineToWrap.lastIndexOf(" ", breakPos);
-      writeNextLineUpTo(rightmostSpacePos);
+      if (rightmostSpacePos != -1) {
+        writeLineExcluding(rightmostSpacePos);
+      } else {
+        writeLineResumeAt(breakPos);
+      }
     }
+  }
+
+  private void writeLineExcluding(int breakPos) {
+    writeLineUpTo(breakPos);
+    nextLineStartPos = breakPos + 1;
+  }
+
+  private void writeLineResumeAt(int breakPos) {
+    writeLineUpTo(breakPos);
+    nextLineStartPos = breakPos;
+  }
+
+  private void writeLineUpTo(int breakPos) {
+    String line = lineToWrap.substring(nextLineStartPos, breakPos);
+    destBuilder.append(line);
+    destBuilder.append('\n');
   }
 
   private void writeRemainingChars() {
     String line = lineToWrap.substring(nextLineStartPos);
     destBuilder.append(line);
     nextLineStartPos = lineToWrap.length();
-  }
-
-  private void writeNextLineUpTo(int breakPos) {
-    String line = lineToWrap.substring(nextLineStartPos, breakPos);
-    destBuilder.append(line);
-    destBuilder.append('\n');
-    nextLineStartPos = breakPos + 1;
-  }
-
-  private boolean nextBreakpointInLine() {
-    return (nextLineStartPos + maxCharsPerLine) <= lineToWrap.length();
-  }
-
-  private boolean charsLeftToConsume() {
-    return nextLineStartPos < lineToWrap.length();
   }
 }
