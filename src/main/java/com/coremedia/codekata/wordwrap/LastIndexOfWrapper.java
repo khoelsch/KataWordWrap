@@ -61,31 +61,31 @@ public class LastIndexOfWrapper implements LineWrapper {
   }
 
   private void writeNextLine() {
-    int breakPos = nextLineStartPos + maxCharsPerLine;
-    if (lineToWrap.charAt(breakPos) == ' ') {
-      writeLineExcluding(breakPos);
+    int posToInsertNewLine = nextLineStartPos + maxCharsPerLine;
+    if (lineToWrap.charAt(posToInsertNewLine) == ' ') {
+      writeLineSkip(posToInsertNewLine);
     } else {
-      int rightmostSpacePos = lineToWrap.lastIndexOf(" ", breakPos);
+      int rightmostSpacePos = lineToWrap.lastIndexOf(" ", posToInsertNewLine);
       if (rightmostSpacePos != -1) {
-        writeLineExcluding(rightmostSpacePos);
+        writeLineSkip(rightmostSpacePos);
       } else {
-        writeLineResumeAt(breakPos);
+        writeLineResumeAt(posToInsertNewLine);
       }
     }
   }
 
-  private void writeLineExcluding(int breakPos) {
-    writeLineUpTo(breakPos);
-    nextLineStartPos = breakPos + 1;
+  private void writeLineSkip(int posToInsertNewLine) {
+    writeLineExcluding(posToInsertNewLine);
+    nextLineStartPos = posToInsertNewLine + 1;
   }
 
-  private void writeLineResumeAt(int breakPos) {
-    writeLineUpTo(breakPos);
-    nextLineStartPos = breakPos;
+  private void writeLineResumeAt(int posToInsertNewLine) {
+    writeLineExcluding(posToInsertNewLine);
+    nextLineStartPos = posToInsertNewLine;
   }
 
-  private void writeLineUpTo(int breakPos) {
-    String line = lineToWrap.substring(nextLineStartPos, breakPos);
+  private void writeLineExcluding(int posToInsertNewLine) {
+    String line = lineToWrap.substring(nextLineStartPos, posToInsertNewLine);
     destBuilder.append(line);
     destBuilder.append('\n');
   }
