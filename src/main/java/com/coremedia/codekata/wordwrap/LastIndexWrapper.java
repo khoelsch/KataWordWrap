@@ -38,34 +38,42 @@ public class LastIndexWrapper implements LineWrapper {
 
   private String wrapLine() {
     while (charsLeftToConsume()) {
-      writeLineToBuffer();
+      writeCharsToBuffer();
     }
 
     return destBuilder.toString();
   }
 
-  private void writeLineToBuffer() {
+  private void writeCharsToBuffer() {
     if (nextBreakpointInLine()) {
-      int breakPos = nextLineStartPos + maxCharsPerLine;
-      char charAtBreakPos = lineToWrap.charAt(breakPos);
-      if (charAtBreakPos == ' ') {
-        String line = lineToWrap.substring(nextLineStartPos, breakPos);
-        destBuilder.append(line);
-        destBuilder.append('\n');
-        nextLineStartPos = breakPos + 1;
-      } else {
-        // TODO berueksichtigen, wenn der String keine Leerzeichen enthaelt!
-        int rightmostSpacePos = lineToWrap.lastIndexOf(" ", breakPos);
-        String line = lineToWrap.substring(nextLineStartPos, rightmostSpacePos);
-        destBuilder.append(line);
-        destBuilder.append('\n');
-        nextLineStartPos = rightmostSpacePos + 1;
-      }
+      writeNextLine();
     } else {
-      String line = lineToWrap.substring(nextLineStartPos);
-      destBuilder.append(line);
-      nextLineStartPos = lineToWrap.length();
+      writeRemainingChars();
     }
+  }
+
+  private void writeNextLine() {
+    int breakPos = nextLineStartPos + maxCharsPerLine;
+    if (lineToWrap.charAt(breakPos) == ' ') {
+      writeNextLineUpTo(breakPos);
+    } else {
+      // TODO berueksichtigen, wenn der String keine Leerzeichen enthaelt!
+      int rightmostSpacePos = lineToWrap.lastIndexOf(" ", breakPos);
+      writeNextLineUpTo(rightmostSpacePos);
+    }
+  }
+
+  private void writeRemainingChars() {
+    String line = lineToWrap.substring(nextLineStartPos);
+    destBuilder.append(line);
+    nextLineStartPos = lineToWrap.length();
+  }
+
+  private void writeNextLineUpTo(int breakPos) {
+    String line = lineToWrap.substring(nextLineStartPos, breakPos);
+    destBuilder.append(line);
+    destBuilder.append('\n');
+    nextLineStartPos = breakPos + 1;
   }
 
   private boolean nextBreakpointInLine() {
