@@ -1,41 +1,46 @@
 package com.coremedia.codekata.wordwrap;
 
 /**
- * Utilizes String.lastIndexOf().
+ * <p>Utilizes String.lastIndexOf().</p>
  *
- * The idea is not to break a word, if you can find a
- * space on the left.
+ * <p>The idea is not to break a word, if you can find a
+ * space on the left. Example:</p>
+ *
+ * <ul>
+ *   <li>maxCharsPerLine = 6</li>
+ *   <li>Input: "foo bar"</li>
+ *   <li>Output: "foo\\nbar" (and NOT "foo b\\nar")</li>
+ * </ul>
  */
 public class LastIndexWrapper implements LineWrapper {
+  private String lineToWrap;
+  private int maxCharsPerLine;
+  private StringBuilder destBuilder;
+
   @Override
   public String wrap(String lineToWrap, int maxCharsPerLine) {
-    String result = lineToWrap;
-    StringBuilder destBuilder = new StringBuilder();
+    init(lineToWrap, maxCharsPerLine);
 
-    if (lineToWrap.length() > maxCharsPerLine) {
+    return lineTooLong() ? wrapLine() : lineToWrap;
+  }
 
-      final int breakpos = lineToWrap.lastIndexOf(" ", maxCharsPerLine);
-      if (breakpos > -1) {
-        destBuilder.append(lineToWrap.substring(0,breakpos));
-        destBuilder.append("\n");
-        destBuilder.append(lineToWrap.substring(breakpos+1));
-     }
-      result = destBuilder.toString();
-    }
+  private void init(String lineToWrap, int maxCharsPerLine) {
+    this.lineToWrap = lineToWrap;
+    this.maxCharsPerLine = maxCharsPerLine;
+    this.destBuilder = new StringBuilder();
+  }
 
-    /*
-    maxchlength = 3
-    --
-    ab cd  => ab\ncd
-    ab  cd => ab\ncd
-    abc => abc
+  private boolean lineTooLong() {
+    return lineToWrap.length() > maxCharsPerLine;
+  }
 
-
-    maxCharsPerLength = 4
-    ab cd => ab c\nd
-
-
-    */
-    return result;
+  private String wrapLine() {
+    int breakPos = lineToWrap.lastIndexOf(" ", maxCharsPerLine);
+    if (breakPos > -1) {
+      destBuilder.append(lineToWrap.substring(0,breakPos));
+      destBuilder.append("\n");
+      destBuilder.append(lineToWrap.substring(breakPos+1));
+   }
+   return destBuilder.toString();
   }
 }
