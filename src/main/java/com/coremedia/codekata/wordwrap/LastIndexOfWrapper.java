@@ -12,7 +12,7 @@ package com.coremedia.codekata.wordwrap;
  *   <li>Output: "foo\\nbar" (and NOT "foo b\\nar")</li>
  * </ul>
  */
-public class LastIndexWrapper implements LineWrapper {
+public class LastIndexOfWrapper implements LineWrapper {
   private String lineToWrap;
   private int maxCharsPerLine;
   private StringBuilder destBuilder;

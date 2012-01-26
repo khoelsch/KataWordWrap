@@ -4,13 +4,13 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class LastIndexWrapperTest {
+public class LastIndexOfWrapperTest {
 
-  private LastIndexWrapper wrapper;
+  private LastIndexOfWrapper wrapper;
 
   @Before
   public void setUp() throws Exception {
-    wrapper = new LastIndexWrapper();
+    wrapper = new LastIndexOfWrapper();
   }
 
   @Test
