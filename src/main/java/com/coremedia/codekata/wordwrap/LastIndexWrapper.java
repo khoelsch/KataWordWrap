@@ -16,6 +16,7 @@ public class LastIndexWrapper implements LineWrapper {
   private String lineToWrap;
   private int maxCharsPerLine;
   private StringBuilder destBuilder;
+  private int nextLineStartPos;
 
   @Override
   public String wrap(String lineToWrap, int maxCharsPerLine) {
@@ -27,7 +28,8 @@ public class LastIndexWrapper implements LineWrapper {
   private void init(String lineToWrap, int maxCharsPerLine) {
     this.lineToWrap = lineToWrap;
     this.maxCharsPerLine = maxCharsPerLine;
-    this.destBuilder = new StringBuilder();
+    destBuilder = new StringBuilder();
+    nextLineStartPos = 0;
   }
 
   private boolean lineTooLong() {
@@ -35,12 +37,42 @@ public class LastIndexWrapper implements LineWrapper {
   }
 
   private String wrapLine() {
-    int breakPos = lineToWrap.lastIndexOf(" ", maxCharsPerLine);
-    if (breakPos > -1) {
-      destBuilder.append(lineToWrap.substring(0,breakPos));
-      destBuilder.append("\n");
-      destBuilder.append(lineToWrap.substring(breakPos+1));
-   }
-   return destBuilder.toString();
+    while (charsLeftToConsume()) {
+      writeLineToBuffer();
+    }
+
+    return destBuilder.toString();
+  }
+
+  private void writeLineToBuffer() {
+    if (nextBreakpointInLine()) {
+      int breakPos = nextLineStartPos + maxCharsPerLine;
+      char charAtBreakPos = lineToWrap.charAt(breakPos);
+      if (charAtBreakPos == ' ') {
+        String line = lineToWrap.substring(nextLineStartPos, breakPos);
+        destBuilder.append(line);
+        destBuilder.append('\n');
+        nextLineStartPos = breakPos + 1;
+      } else {
+        // TODO berueksichtigen, wenn der String keine Leerzeichen enthaelt!
+        int rightmostSpacePos = lineToWrap.lastIndexOf(" ", breakPos);
+        String line = lineToWrap.substring(nextLineStartPos, rightmostSpacePos);
+        destBuilder.append(line);
+        destBuilder.append('\n');
+        nextLineStartPos = rightmostSpacePos + 1;
+      }
+    } else {
+      String line = lineToWrap.substring(nextLineStartPos);
+      destBuilder.append(line);
+      nextLineStartPos = lineToWrap.length();
+    }
+  }
+
+  private boolean nextBreakpointInLine() {
+    return (nextLineStartPos + maxCharsPerLine) <= lineToWrap.length();
+  }
+
+  private boolean charsLeftToConsume() {
+    return nextLineStartPos < lineToWrap.length();
   }
 }

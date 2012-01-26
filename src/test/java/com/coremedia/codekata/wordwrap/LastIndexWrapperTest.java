@@ -19,16 +19,31 @@ public class LastIndexWrapperTest {
   }
 
   @Test
-  public void doesNotWrap() {
-    final String expected = "ab cd";
-    final String actual = wrapper.wrap("ab cd", 10);
+  public void dontWrapSmallLine() {
+    String expected = "ab cd";
+    String actual = wrapper.wrap("ab cd", 100);
     Assert.assertEquals(expected, actual);
   }
 
   @Test
-  public void simpleWrap() {
-    final String expected = "ab\ncd";
-    final String actual = wrapper.wrap("ab cd", 3);
+  public void simpleWrapAtSpace() {
+    String expected = "ab\ncd";
+    String actual = wrapper.wrap("ab cd", 3);
+    Assert.assertEquals(expected, actual);
+  }
+
+  @Test
+  public void simpleWrapAfterFirstWord() {
+    String expected = "ab\ncd";
+    String actual = wrapper.wrap("ab cd", 3);
+    Assert.assertEquals(expected, actual);
+  }
+
+  @Test
+  public void simpleWrapTwoTimesAtSpace() {
+    String line = "ab cd ef";
+    String expected = "ab\ncd\nef";
+    String actual = wrapper.wrap(line, 3);
     Assert.assertEquals(expected, actual);
   }
 }
