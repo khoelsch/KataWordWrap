@@ -5,7 +5,6 @@ package com.coremedia.codekata.wordwrap;
  */
 public final class IndexAccessLineWrapper implements LineWrapper {
 
-  @Override
   public String wrap(final String lineToWrap, final int maxCharsPerLine) {
     if (maxCharsPerLine <= 0) {
       return lineToWrap;
