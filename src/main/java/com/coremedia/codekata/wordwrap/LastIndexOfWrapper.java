@@ -13,7 +13,7 @@ package com.coremedia.codekata.wordwrap;
  * </ul>
  */
 public class LastIndexOfWrapper implements LineWrapper {
-  private String lineToWrap;
+  private StringBuilder srcBuilder;
   private int maxCharsPerLine;
   private StringBuilder destBuilder;
   private int nextLineStartPos;
@@ -26,14 +26,14 @@ public class LastIndexOfWrapper implements LineWrapper {
   }
 
   private void init(String lineToWrap, int maxCharsPerLine) {
-    this.lineToWrap = lineToWrap;
+    this.srcBuilder = new StringBuilder(lineToWrap);
     this.maxCharsPerLine = maxCharsPerLine;
     destBuilder = new StringBuilder();
     nextLineStartPos = 0;
   }
 
   private boolean lineTooLong() {
-    return lineToWrap.length() > maxCharsPerLine;
+    return srcBuilder.length() > maxCharsPerLine;
   }
 
   private String wrapLine() {
@@ -45,7 +45,7 @@ public class LastIndexOfWrapper implements LineWrapper {
   }
 
   private boolean charsLeftToConsume() {
-    return nextLineStartPos < lineToWrap.length();
+    return nextLineStartPos < srcBuilder.length();
   }
 
   private void writeCharsToBuffer() {
@@ -57,15 +57,15 @@ public class LastIndexOfWrapper implements LineWrapper {
   }
 
   private boolean nextBreakpointInLine() {
-    return (nextLineStartPos + maxCharsPerLine) < lineToWrap.length();
+    return (nextLineStartPos + maxCharsPerLine) < srcBuilder.length();
   }
 
   private void writeNextLine() {
     int posToInsertNewLine = nextLineStartPos + maxCharsPerLine;
-    if (lineToWrap.charAt(posToInsertNewLine) == ' ') {
+    if (srcBuilder.charAt(posToInsertNewLine) == ' ') {
       writeLineSkip(posToInsertNewLine);
     } else {
-      int rightmostSpacePos = lineToWrap.lastIndexOf(" ", posToInsertNewLine);
+      int rightmostSpacePos = srcBuilder.lastIndexOf(" ", posToInsertNewLine);
       if (rightmostSpacePos != -1) {
         writeLineSkip(rightmostSpacePos);
       } else {
@@ -85,14 +85,16 @@ public class LastIndexOfWrapper implements LineWrapper {
   }
 
   private void writeLineExcluding(int posToInsertNewLine) {
-    String line = lineToWrap.substring(nextLineStartPos, posToInsertNewLine);
-    destBuilder.append(line);
+    for (int i=nextLineStartPos; i<posToInsertNewLine; ++i) {
+      destBuilder.append(srcBuilder.charAt(i));
+    }
+
     destBuilder.append('\n');
   }
 
   private void writeRemainingChars() {
-    String line = lineToWrap.substring(nextLineStartPos);
+    String line = srcBuilder.substring(nextLineStartPos);
     destBuilder.append(line);
-    nextLineStartPos = lineToWrap.length();
+    nextLineStartPos = srcBuilder.length();
   }
 }
