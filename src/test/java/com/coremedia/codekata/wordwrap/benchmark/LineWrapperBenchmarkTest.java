@@ -40,7 +40,8 @@ public class LineWrapperBenchmarkTest extends AbstractBenchmark {
       wrappers.put("RreLineWrapper3", new RreLineWrapper3());
       wrappers.put("IndexAccessLineWrapper", new IndexAccessLineWrapper());
       wrappers.put("CharAtLineWrapper", new CharAtLineWrapper());
-      wrappers.put("AveMmiLineWrapper", new AveMmiLineWrapper());
+      wrappers.put("AveMmiLineWrapper1", new AveMmiLineWrapper1());
+      wrappers.put("AveMmiLineWrapper2", new AveMmiLineWrapper2());
       wrappers.put("CharArrayLineWrapper", new CharArrayLineWrapper());
   }
 
@@ -89,8 +90,14 @@ public class LineWrapperBenchmarkTest extends AbstractBenchmark {
 
     @Test
     @BenchmarkOptions(benchmarkRounds = 10, warmupRounds = 10, callgc = true)
-    public void testAveMmiLineWrapper() throws Exception {
-        testPerformance(wrappers.get("AveMmiLineWrapper"));
+    public void testAveMmiLineWrapper1() throws Exception {
+        testPerformance(wrappers.get("AveMmiLineWrapper1"));
+    }
+
+    @Test
+    @BenchmarkOptions(benchmarkRounds = 10, warmupRounds = 10, callgc = true)
+    public void testAveMmiLineWrapper2() throws Exception {
+        testPerformance(wrappers.get("AveMmiLineWrapper2"));
     }
 
     private void testPerformance(final LineWrapper wrapper) {
