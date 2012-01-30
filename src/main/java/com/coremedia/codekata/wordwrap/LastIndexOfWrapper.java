@@ -1,7 +1,7 @@
 package com.coremedia.codekata.wordwrap;
 
 /**
- * <p>Utilizes String.lastIndexOf().</p>
+ * <p>This implementation utilizes String.lastIndexOf().</p>
  *
  * <p>The idea is not to break a word, if you can find a
  * space on the left. Example:</p>
@@ -11,6 +11,8 @@ package com.coremedia.codekata.wordwrap;
  *   <li>Input: "foo bar"</li>
  *   <li>Output: "foo\\nbar" (and NOT "foo b\\nar")</li>
  * </ul>
+ *
+ * <p>Note: This class' methods are written in "Clean Code" style, as stated by Robert C. Martin (aka Uncle Bob).</p>
  */
 public class LastIndexOfWrapper implements LineWrapper {
   private StringBuilder srcBuilder;
@@ -26,7 +28,7 @@ public class LastIndexOfWrapper implements LineWrapper {
   }
 
   private void init(String lineToWrap, int maxCharsPerLine) {
-    this.srcBuilder = new StringBuilder(lineToWrap);
+    srcBuilder = new StringBuilder(lineToWrap);
     this.maxCharsPerLine = maxCharsPerLine;
     destBuilder = new StringBuilder();
     nextLineStartPos = 0;
