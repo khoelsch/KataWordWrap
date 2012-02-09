@@ -76,18 +76,19 @@ public class LastIndexOfWrapper implements LineWrapper {
     }
   }
 
-  private void writeLineSkip(int posToInsertNewLine) {
-    writeLineExcluding(posToInsertNewLine);
-    nextLineStartPos = posToInsertNewLine + 1;
+
+  private void writeLineSkip(int position) {
+    writeLineExcluding(position);
+    nextLineStartPos = position + 1;
   }
 
-  private void writeLineResumeAt(int posToInsertNewLine) {
-    writeLineExcluding(posToInsertNewLine);
-    nextLineStartPos = posToInsertNewLine;
+  private void writeLineResumeAt(int position) {
+    writeLineExcluding(position);
+    nextLineStartPos = position;
   }
 
-  private void writeLineExcluding(int posToInsertNewLine) {
-    for (int i=nextLineStartPos; i<posToInsertNewLine; ++i) {
+  private void writeLineExcluding(int position) {
+    for (int i=nextLineStartPos; i<position; ++i) {
       destBuilder.append(srcBuilder.charAt(i));
     }
 
@@ -95,8 +96,8 @@ public class LastIndexOfWrapper implements LineWrapper {
   }
 
   private void writeRemainingChars() {
-    String line = srcBuilder.substring(nextLineStartPos);
-    destBuilder.append(line);
+    String remainder = srcBuilder.substring(nextLineStartPos);
+    destBuilder.append(remainder);
     nextLineStartPos = srcBuilder.length();
   }
 }
