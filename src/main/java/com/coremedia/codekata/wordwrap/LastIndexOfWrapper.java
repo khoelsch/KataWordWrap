@@ -15,6 +15,7 @@ package com.coremedia.codekata.wordwrap;
  * <p>Note: This class' methods are written in "Clean Code" style, as stated by Robert C. Martin (aka Uncle Bob).</p>
  */
 public class LastIndexOfWrapper implements LineWrapper {
+  private static final String SPACE = " ";
   private StringBuilder srcBuilder;
   private int maxCharsPerLine;
   private StringBuilder destBuilder;
@@ -24,7 +25,13 @@ public class LastIndexOfWrapper implements LineWrapper {
   public String wrap(String lineToWrap, int maxCharsPerLine) {
     init(lineToWrap, maxCharsPerLine);
 
-    return lineTooLong() ? wrapLine() : lineToWrap;
+    boolean lineTooLong = srcBuilder.length() > maxCharsPerLine;
+    if (lineTooLong) {
+      wrapLine();
+      return destBuilder.toString();
+    } else {
+      return lineToWrap;
+    }
   }
 
   private void init(String lineToWrap, int maxCharsPerLine) {
@@ -34,44 +41,32 @@ public class LastIndexOfWrapper implements LineWrapper {
     nextLineStartPos = 0;
   }
 
-  private boolean lineTooLong() {
-    return srcBuilder.length() > maxCharsPerLine;
-  }
-
-  private String wrapLine() {
-    while (charsLeftToConsume()) {
-      writeCharsToBuffer();
+  private void wrapLine() {
+    while (nextLineStartPos < srcBuilder.length()) {
+      writeLineToBuffer();
     }
-
-    return destBuilder.toString();
   }
 
-  private boolean charsLeftToConsume() {
-    return nextLineStartPos < srcBuilder.length();
-  }
-
-  private void writeCharsToBuffer() {
-    if (nextBreakpointInLine()) {
+  private void writeLineToBuffer() {
+    boolean needToWrap = (nextLineStartPos + maxCharsPerLine) < srcBuilder.length();
+    if (needToWrap) {
       writeNextLine();
     } else {
       writeRemainingChars();
     }
   }
 
-  private boolean nextBreakpointInLine() {
-    return (nextLineStartPos + maxCharsPerLine) < srcBuilder.length();
-  }
-
   private void writeNextLine() {
-    int posToInsertNewLine = nextLineStartPos + maxCharsPerLine;
-    if (srcBuilder.charAt(posToInsertNewLine) == ' ') {
-      writeLineSkip(posToInsertNewLine);
+    int lastPossibleBreakPos = (nextLineStartPos + maxCharsPerLine);
+    boolean spaceAtBreakPos = SPACE.charAt(0) == srcBuilder.charAt(lastPossibleBreakPos);
+    if (spaceAtBreakPos) {
+      writeLineSkip(lastPossibleBreakPos);
     } else {
-      int rightmostSpacePos = srcBuilder.lastIndexOf(" ", posToInsertNewLine);
+      int rightmostSpacePos = srcBuilder.lastIndexOf(SPACE, lastPossibleBreakPos);
       if (rightmostSpacePos != -1) {
         writeLineSkip(rightmostSpacePos);
       } else {
-        writeLineResumeAt(posToInsertNewLine);
+        writeLineResumeAt(lastPossibleBreakPos);
       }
     }
   }
