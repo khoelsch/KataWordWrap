@@ -7,7 +7,7 @@ package com.coremedia.codekata.wordwrap;
  * space on the left. Example:</p>
  *
  * <ul>
- *   <li>maxCharsPerLine = 6</li>
+ *   <li>maxCharsPerLine = 5</li>
  *   <li>Input: "foo bar"</li>
  *   <li>Output: "foo\\nbar" (and NOT "foo b\\nar")</li>
  * </ul>
