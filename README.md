@@ -14,4 +14,4 @@ The goal is to see how performance of an algorithm affects the readablilty of th
 
 - You can checkout the branch `raw-project` to start with a minimal  project (POM, empty class, empty test class)
 - The `final` keyword is ommitted for sakes of readability
-- Good software design / arcitecture is not a primary goal (although not "prohibited")
+- Good software design / architecture is not a primary goal (although not "prohibited")
